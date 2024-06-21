@@ -1,0 +1,20 @@
+{
+    "id": 1,
+    "answer":[{
+        "id": 1,
+        "name": "A",
+        "value": "A"
+    },{
+        "id": 2,
+        "name": "B",
+        "value": "B"
+    },{
+        "id": 3,
+        "name": "C",
+        "value": "C"
+    },{
+        "id": 4,
+        "name": "D",
+        "value": "D"
+    }]
+}
