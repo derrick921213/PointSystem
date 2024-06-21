@@ -1,7 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
-
+const draculaTheme = prismThemes.dracula;
 const config: Config = {
   title: 'Point System',
   tagline: 'A point system for our Project',
@@ -72,8 +72,12 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Duacodie inc. Built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: draculaTheme,
+      additionalLanguages: ["rust", "toml", "shell-session"],
+      defaultLanguage: "rust",
+    },
+    colorMode: {
+      respectPrefersColorScheme: true,
     },
   } satisfies Preset.ThemeConfig,
 };
