@@ -12,3 +12,8 @@ class Config:
     domain_env = getenv("DOMAIN")
     cookie_name = getenv("COOKIE_NAME")
     allow_origins = json.loads(getenv("ALLOW_ORIGINS"))
+    google_client_id = getenv("GOOGLE_CLIENT_ID")
+    google_client_secret = getenv("GOOGLE_CLIENT_SECRET")
+    google_redirect_uri = getenv("GOOGLE_REDIRECT_URI")
+    allowed_emails = json.loads(getenv("ALLOWED_EMAILS", "[]"))
+    frontend_redirect_uri = getenv("FRONTEND_REDIRECT_URI")

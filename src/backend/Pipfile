@@ -4,13 +4,17 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
 uvicorn = "*"
 sqlalchemy = "*"
 pydantic = "*"
 databases = {extras = ["mysql"], version = "*"}
 passlib = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
+fastapi = {extras = ["all"], version = "*"}
+google-auth = "*"
+requests = "*"
+google-auth-oauthlib = "*"
+starlette = "*"
 
 [dev-packages]
 
