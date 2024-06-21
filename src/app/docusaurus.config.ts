@@ -61,6 +61,12 @@ const config: Config = {
           label: 'Tutorial',
         },
         {
+          type: 'docSidebar',
+          sidebarId: 'testSidebar',
+          position: 'left',
+          label: 'Test',
+        },
+        {
           type: 'custom-GoogleLoginButton', // 自定義類型
           position: 'right',
         },

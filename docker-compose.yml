@@ -16,48 +16,35 @@ services:
         - action: sync
           path: ./src/backend/src
           target: /app
-  # vite-app:
-  #   image: node:20
-  #   container_name: vite-app
-  #   volumes:
-  #     - ./src/app:/app
-  #   working_dir: /app
-  #   command: sh -c "npm install && npm run dev"
-  #   ports:
-  #     - "3000:8080"
-  #   environment:
-  #     DATABASE_HOST: ${DATABASE_HOST}
-  #     DATABASE_USER: ${DATABASE_USER}
-  #     DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-  #     DATABASE_NAME: ${DATABASE_NAME}
-  #   develop:
-  #     watch:
-  #       - action: sync
-  #         path: ./src/app
-  #         target: /app
-  #   depends_on:
-  #     - db
-  docusaurus_dev:
+  docusaurus:
     build:
       context: ./src/app
-      target: development
+      target: ${TARGET:-development}
     ports:
       - '3000:3000'
     depends_on:
       - fastapi-app
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${TARGET:-development}
+    develop:
+      watch:
+        - action: sync
+          path: ./src/app
+          target: /app
+        - action: rebuild
+          path: ./src/app/.docusaurus
+          target: /app/.docusaurus
 
-  docusaurus_prod:
-    build:
-      context: ./src/app
-      target: production
-    ports:
-      - '80:80'
-    depends_on:
-      - fastapi-app
-    environment:
-      - NODE_ENV=production
+  # docusaurus_prod:
+  #   build:
+  #     context: ./src/app
+  #     target: production
+  #   ports:
+  #     - '80:80'
+  #   depends_on:
+  #     - fastapi-app
+  #   environment:
+  #     - NODE_ENV=production
 
   db:
     image: mariadb:lts
