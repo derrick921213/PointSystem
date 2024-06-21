@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import path from 'path';
 const draculaTheme = prismThemes.dracula;
 const config: Config = {
   title: 'Point System',
@@ -58,6 +59,10 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Tutorial',
+        },
+        {
+          type: 'custom-GoogleLoginButton', // 自定義類型
+          position: 'right',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         // {

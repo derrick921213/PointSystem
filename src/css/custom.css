@@ -47,6 +47,6 @@ html[data-theme="dark"] {
   padding: 0 var(--ifm-pre-padding);
 }
 
-/* .navbar__logo {
+.navbar__logo {
   filter: var(--logo-filter);
-} */
+}
