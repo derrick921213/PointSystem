@@ -5,7 +5,8 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file: 
       - .env
     volumes:
@@ -15,27 +16,48 @@ services:
         - action: sync
           path: ./src/backend/src
           target: /app
-  vite-app:
-    image: node:20
-    container_name: vite-app
-    volumes:
-      - ./src/app:/app
-    working_dir: /app
-    command: sh -c "npm install && npm run dev"
+  # vite-app:
+  #   image: node:20
+  #   container_name: vite-app
+  #   volumes:
+  #     - ./src/app:/app
+  #   working_dir: /app
+  #   command: sh -c "npm install && npm run dev"
+  #   ports:
+  #     - "3000:8080"
+  #   environment:
+  #     DATABASE_HOST: ${DATABASE_HOST}
+  #     DATABASE_USER: ${DATABASE_USER}
+  #     DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+  #     DATABASE_NAME: ${DATABASE_NAME}
+  #   develop:
+  #     watch:
+  #       - action: sync
+  #         path: ./src/app
+  #         target: /app
+  #   depends_on:
+  #     - db
+  docusaurus_dev:
+    build:
+      context: ./src/app
+      target: development
     ports:
-      - "3000:8080"
-    environment:
-      DATABASE_HOST: ${DATABASE_HOST}
-      DATABASE_USER: ${DATABASE_USER}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
-      DATABASE_NAME: ${DATABASE_NAME}
-    develop:
-      watch:
-        - action: sync
-          path: ./src/app
-          target: /app
+      - '3000:3000'
     depends_on:
-      - db
+      - fastapi-app
+    environment:
+      - NODE_ENV=development
+
+  docusaurus_prod:
+    build:
+      context: ./src/app
+      target: production
+    ports:
+      - '80:80'
+    depends_on:
+      - fastapi-app
+    environment:
+      - NODE_ENV=production
 
   db:
     image: mariadb:lts
@@ -47,14 +69,17 @@ services:
       - db-data:/var/lib/mysql
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -p${MARIADB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
   phpmyadmin:
     image: phpmyadmin
     container_name: phpmyadmin
     environment:
       PMA_HOST: db
-      # PMA_PORT: 3306
-      # MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "8080:80"
     depends_on:

@@ -1,0 +1,50 @@
+# 使用 Node 的官方鏡像來構建 Docusaurus 靜態文件
+FROM node:20-alpine AS builder
+
+# 設置工作目錄
+WORKDIR /app
+
+# 複製 package.json 和 package-lock.json
+COPY package*.json ./
+RUN apk update && apk add --no-cache bash iputils-ping
+# 安裝依賴
+RUN npm install
+
+# 複製所有文件到容器
+COPY . .
+
+# 構建 Docusaurus 項目
+RUN npm run build
+
+# 使用 Nginx 提供靜態文件服務
+FROM nginx:alpine AS production
+
+# 複製構建的靜態文件到 Nginx 伺服器
+COPY --from=builder /app/build /usr/share/nginx/html
+
+# 暴露 Nginx 的默認端口
+EXPOSE 80
+
+# 啟動 Nginx
+CMD ["nginx", "-g", "daemon off;"]
+
+# 使用 Node 的官方鏡像來啟動開發伺服器
+FROM node:20-alpine AS development
+
+# 設置工作目錄
+WORKDIR /app
+
+# 複製 package.json 和 package-lock.json
+COPY package*.json ./
+
+# 安裝依賴
+RUN npm install
+
+# 複製所有文件到容器
+COPY . .
+
+# 暴露開發伺服器的默認端口
+EXPOSE 3000
+
+# 啟動 Docusaurus 開發伺服器
+CMD ["npm", "start"]
