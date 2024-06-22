@@ -27,8 +27,9 @@ const Root: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <header className={clsx("hero hero--primary", styles.heroBanner)}>
         <div className="container">
           <Heading as="h1" className="hero__title">
-            請先登入
+            Duacodie PointSystem
           </Heading>
+          <p className="hero__subtitle">請登入Google以繼續使用PointSystem</p>
           <GoogleLoginButton></GoogleLoginButton>
         </div>
       </header>
