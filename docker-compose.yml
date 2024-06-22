@@ -7,6 +7,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      
     env_file: 
       - .env
     volumes:
@@ -24,6 +25,7 @@ services:
       - '3000:3000'
     depends_on:
       - fastapi-app
+      - phpmyadmin
     environment:
       - NODE_ENV=${TARGET:-development}
     develop:

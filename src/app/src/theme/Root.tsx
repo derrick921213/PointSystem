@@ -1,29 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { useUser, UserProvider } from "@site/src/components/UserContext"; // Adjust the import path as necessary
+import { useUser, UserProvider } from "@site/src/components/UserContext";
+import GoogleLoginButton from "@site/src/components/GoogleLoginButton";
+import clsx from "clsx";
+import Heading from "@theme/Heading";
+import styles from "./root.module.css";
 
 const Root: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useUser();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     if (!loading) {
-      if (!user) {
-        console.log(user);
-        // window.location.href = `${window.location.protocol}//${window.location.hostname}:8000/auth/login/`;
-      } else {
-        console.log(user);
+      if (user) {
         setIsLoggedIn(true);
       }
     }
-  }, [loading, user]);
+  }, [user]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // if (isLoggedIn) {
-  //   return null; // Optionally, you can return a loading spinner or some placeholder
-  // }
+  if (!isLoggedIn) {
+    return (
+      <header className={clsx("hero hero--primary", styles.heroBanner)}>
+        <div className="container">
+          <Heading as="h1" className="hero__title">
+            請先登入
+          </Heading>
+          <GoogleLoginButton></GoogleLoginButton>
+        </div>
+      </header>
+    );
+  }
 
   return <>{children}</>;
 };
