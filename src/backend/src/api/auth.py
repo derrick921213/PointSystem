@@ -130,11 +130,15 @@ async def get_user_data(user: User = Depends(validate_token)):
     }
 
 
-@router.post("/logout/")
+@router.get("/logout/")
 async def logout_with_access(response: Response, user: User = Depends(validate_token)):
     response.delete_cookie(key=Config.cookie_name,
                            domain=Config.domain_env, path="/")
-    return {"message": "Logout successful."}
+    response = RedirectResponse(url=Config.frontend_redirect_uri)
+    response.delete_cookie(key=Config.cookie_name,
+                           domain=Config.domain_env, path="/")
+    # return {"message": "Logout successful."}
+    return response
 
 
 @router.get("/isLogin/")
