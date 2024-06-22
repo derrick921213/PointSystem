@@ -7,3 +7,4 @@ class User(Base):
     username = Column(String(50), unique=True, nullable=False)
     email = Column(String(100), unique=True)
     permission = Column(Integer, default=0)
+    avatar_url = Column(String(100))

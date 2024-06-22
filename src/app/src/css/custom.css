@@ -50,3 +50,15 @@ html[data-theme="dark"] {
 .navbar__logo {
   filter: var(--logo-filter);
 }
+.navbar__google-login {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Pushes the login button to the right */
+  padding-right: 1rem; /* Adjust spacing as needed */
+}
+
+.navbar__google-login button,
+.navbar__google-login div {
+  margin: 0;
+  padding: 0;
+}

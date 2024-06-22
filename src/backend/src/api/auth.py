@@ -57,7 +57,6 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-# 初始化Google OAuth 2.0流程
 flow = Flow.from_client_config(
     client_config={
         "web": {
@@ -75,7 +74,6 @@ flow = Flow.from_client_config(
 
 @router.get("/login/")
 async def google_login(request: Request):
-    # flow.redirect_uri = Config.google_redirect_uri
     authorization_url, state = flow.authorization_url(
         prompt='consent', access_type='offline')
     request.session['state'] = state
@@ -84,33 +82,34 @@ async def google_login(request: Request):
 
 @router.get("/callback/")
 async def google_auth_callback(request: Request, response: Response, db: Session = Depends(get_db)):
-    # flow.redirect_uri = Config.google_redirect_uri
     if 'state' not in request.session:
-        raise HTTPException(status_code=400, detail="无效的state参数")
+        raise HTTPException(status_code=400, detail="無效的state参数")
     try:
         flow.fetch_token(authorization_response=str(request.url))
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"获取令牌失败: {e}")
-    # flow.fetch_token(authorization_response=str(request.url))
+        raise HTTPException(status_code=400, detail=f"獲取Token失敗: {e}")
     credentials = flow.credentials
-    # id_info = id_token.verify_oauth2_token(
-    #     credentials.id_token, GoogleRequest(), Config.google_client_id)
     try:
         id_info = id_token.verify_oauth2_token(
             credentials.id_token, GoogleRequest(), Config.google_client_id)
     except Exception as e:
-        raise HTTPException(status_code=400, detail=f"ID令牌验证失败: {e}")
+        raise HTTPException(status_code=400, detail=f"ID Token驗證失敗: {e}")
 
     if id_info["iss"] not in ["accounts.google.com", "https://accounts.google.com"]:
-        raise HTTPException(status_code=400, detail="发行者错误")
+        raise HTTPException(status_code=400, detail="發行者錯誤")
 
     if id_info["email"] not in Config.allowed_emails:
-        return RedirectResponse(url="/auth/login/")
+        return HTTPException(status_code=403, detail=f"User {id_info['email']} not allowed.")
+        # return RedirectResponse(url="/auth/login/")
 
     user = db.query(User).filter(User.email == id_info["email"]).first()
     if not user:
-        user = User(email=id_info["email"], username=id_info["name"])
+        user = User(
+            email=id_info["email"], username=id_info["name"], avatar_url=id_info["picture"])
         db.add(user)
+        db.commit()
+    else:
+        user.avatar_url = id_info["picture"]
         db.commit()
 
     access_token = create_access_token(
@@ -122,6 +121,15 @@ async def google_auth_callback(request: Request, response: Response, db: Session
     return response
 
 
+@router.get("/user/")
+async def get_user_data(user: User = Depends(validate_token)):
+    return {
+        "name": user.username,
+        "email": user.email,
+        "avatarUrl": user.avatar_url
+    }
+
+
 @router.post("/logout/")
 async def logout_with_access(response: Response, user: User = Depends(validate_token)):
     response.delete_cookie(key=Config.cookie_name,
@@ -131,4 +139,4 @@ async def logout_with_access(response: Response, user: User = Depends(validate_t
 
 @router.get("/isLogin/")
 async def is_login(user: User = Depends(validate_token)):
-    return {"message": f"{user.username} {user.email} {user.id}", "is_logged_in": True}
+    return {"message": f"{user.id}", "is_logged_in": True}
