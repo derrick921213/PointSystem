@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUser } from './UserContext'; // 確保路徑正確
+import { useUser } from '@site/src/components/UserContext'; // 確保路徑正確
 
 const GoogleLoginButton: React.FC = () => {
   const { user } = useUser();
@@ -11,8 +11,8 @@ const GoogleLoginButton: React.FC = () => {
   return (
     <div>
       {user ? (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img src={user.avatarUrl} alt="User Avatar" style={{ borderRadius: '50%', width: '50px', height: '50px', marginRight: '10px' }} />
+        <div style={{ display: 'flex', alignItems: 'center' ,justifyContent:'center'}}>
+          <img src={user.avatarUrl} alt="User Avatar" style={{ borderRadius: '50%', width: '35px', height: '35px', marginRight: '10px' }} />
           <p>Welcome, {user.name}!</p>
         </div>
       ) : (
