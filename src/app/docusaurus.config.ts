@@ -14,13 +14,17 @@ const config: Config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'zh-TW',
+    locales: ['en', 'zh-TW'],
     localeConfigs: {
       en: {
         label: 'English',
         direction: 'ltr',
-      }
+      },
+      'zh-TW': {
+        label: '繁體中文（台灣）',
+        direction: 'ltr',
+      },
     },
   },
 
