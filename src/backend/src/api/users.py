@@ -6,10 +6,17 @@ from models import User
 from core.security import validate_token
 
 router = APIRouter(prefix="/users", tags=["users"])
-
 @router.get("/")
-async def read_users(db: Session = Depends(get_db)):
-    return db.query(User).all()
+async def get_user_data(user: User = Depends(validate_token)):
+    return {
+        "name": user.username,
+        "email": user.email,
+        "avatarUrl": user.avatar_url
+    }
+
+# @router.get("/")
+# async def read_users(db: Session = Depends(get_db)):
+#     return db.query(User).all()
     # return {"message": "This is the users endpoint"}
 
 # @router.get("/{user}")

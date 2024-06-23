@@ -23,7 +23,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const isLogin = `${window.location.protocol}//${window.location.hostname}:8000/auth/isLogin`;
-  const users = `${window.location.protocol}//${window.location.hostname}:8000/auth/user/`;
+  const users = `${window.location.protocol}//${window.location.hostname}:8000/users/`;
 
   useEffect(() => {
     axios
