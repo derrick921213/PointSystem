@@ -4,6 +4,7 @@ import GoogleLoginButton from "@site/src/components/GoogleLoginButton";
 import clsx from "clsx";
 import Heading from "@theme/Heading";
 import styles from "./root.module.css";
+import BrowserOnly from "@docusaurus/BrowserOnly";
 
 const Root: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useUser();
@@ -41,9 +42,13 @@ const Root: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const App: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <UserProvider>
-      <Root>{children}</Root>
-    </UserProvider>
+    <BrowserOnly>
+      {() => (
+        <UserProvider>
+          <Root>{children}</Root>
+        </UserProvider>
+      )}
+    </BrowserOnly>
   );
 };
 
