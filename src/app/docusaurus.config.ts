@@ -34,8 +34,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl:
-            'https://github.com/derrick921213/PointSystem/tree/main/',
+          // editUrl:
+          //   'https://github.com/derrick921213/PointSystem/tree/main/',
         },
         theme: {
           customCss: './src/css/custom.css',
