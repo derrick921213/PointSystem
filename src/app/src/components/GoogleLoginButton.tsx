@@ -33,7 +33,7 @@ const GoogleLoginButton: React.FC = () => {
                 marginRight: "10px",
               }}
             />
-            <p className="text--center" style={{ marginRight: "5px" }}>
+            <p className="text--center" style={{ marginRight: "5px" , marginBottom: "0px"}}>
               Welcome, {user.name}!
             </p>
             <button

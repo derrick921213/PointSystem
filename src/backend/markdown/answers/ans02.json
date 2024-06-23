@@ -1,0 +1,24 @@
+{
+    "exam_id": 2,
+    "avg_point": 5,
+    "questions":[
+        {
+            "question_id": 1,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git --version"
+                }
+            ]
+        },
+        {
+            "question_id": 2,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git config --global user.name 'w3schools-test'\ngit config --global user.email 'test@w3schools.com'"
+                }
+            ]
+        }
+    ]
+}
