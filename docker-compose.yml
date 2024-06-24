@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./src/backend/markdown:/app/markdown
+      - ./markdown:/app/markdown
     develop:
       watch:
         - action: sync
@@ -29,14 +29,8 @@ services:
       - phpmyadmin
     environment:
       - NODE_ENV=${TARGET:-development}
-    develop:
-      watch:
-        - action: sync
-          path: ./src/app
-          target: /app
-        - action: rebuild
-          path: ./src/app/.docusaurus
-          target: /app/.docusaurus
+    volumes:
+      - ./markdown/tutorial:/app/docs/tutorial
   db:
     image: mariadb:lts
     container_name: mariadb

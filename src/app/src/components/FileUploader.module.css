@@ -1,0 +1,28 @@
+/* File: src/components/FileUploader.module.css */
+
+.dropzone {
+    border: 2px dashed #0087F7;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .dropzone p {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 5px 0;
+  }
+  
+  .error {
+    color: red;
+  }
+  
