@@ -24,12 +24,12 @@ async def get_markdown(filename: str = Path(...), user: User = Depends(validate_
     raise HTTPException(status_code=404, detail="File not found")
 
 
-@router.put("/markdown/{filename:path}")
+@router.post("/markdown/{filename:path}")
 async def update_markdown(filename: str = Path(...), file: UploadFile = File(...), user: User = Depends(validate_token)):
     validate_filename(filename)
     if user.permission != 1:
         raise HTTPException(status_code=403, detail="Permission denied")
-    file_path = f'markdown/{filename}'
+    file_path = f'markdown/questions/{filename}'
     with open(file_path, "wb") as buffer:
         buffer.write(await file.read())
     return {"message": "File updated successfully"}

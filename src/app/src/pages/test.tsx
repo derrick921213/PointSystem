@@ -64,15 +64,16 @@ function DynamicPage() {
 
   useEffect(() => {
     async function fetchMdx() {
+      const backURL = `${window.location.protocol}//${window.location.hostname}:8000`;
       try {
         const response = await axios.get(
-          `http://localhost:8000/files/markdown/${filename}`,
+          `${backURL}/files/markdown/${filename}`,
           {
             withCredentials: true,
           }
         );
         const total_quizs = await axios.get(
-          `http://localhost:8000/files/q_count`,
+          `${backURL}/files/q_count`,
           {
             withCredentials: true,
           }
