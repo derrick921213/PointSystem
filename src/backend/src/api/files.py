@@ -152,7 +152,9 @@ root_folder = "markdown"
 file_manager = FileManager(base_path, root_folder)
 
 @router.post("/FileOperations")
-async def file_operations(args: FileManagerDirectoryContent):
+async def file_operations(args: FileManagerDirectoryContent,user: User = Depends(validate_token)):
+    if user.permission != 1:
+        raise HTTPException(status_code=403, detail="Permission denied")
     try:
         full_path = get_full_path(file_manager.base_path, args.Path)
         validate_path(full_path, file_manager.root_path)
@@ -181,7 +183,9 @@ async def file_operations(args: FileManagerDirectoryContent):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/Upload")
-async def upload_files(path: str, upload_files: List[UploadFile] = File(...)):
+async def upload_files(path: str, upload_files: List[UploadFile] = File(...),user: User = Depends(validate_token)):
+    if user.permission != 1:
+        raise HTTPException(status_code=403, detail="Permission denied")
     try:
         for file in upload_files:
             file_path = get_full_path(file_manager.base_path, os.path.join(path, file.filename))
