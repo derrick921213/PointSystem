@@ -18,17 +18,23 @@ class FileManager:
             HTTPException: (status_code=404, detail="Directory not found")
 
         Returns:
-            "files": 來源目錄下的所有檔案
+            dict: 包含來源目錄下所有檔案的JSON格式
         """             
         full_path = os.path.join(self.base_path, path)
         if not os.path.exists(full_path):
             raise HTTPException(status_code=404, detail="Directory not found")
+        
         files = []
         for item in os.listdir(full_path):
             if not show_hidden_items and item.startswith('.'):
                 continue
-            files.append(item)
-        return {"files": files}
+            item_path = os.path.join(full_path, item)
+            files.append({
+                "name": item,
+                "isDirectory": os.path.isdir(item_path)
+            })
+        files_sorted = sorted(files, key=lambda x: x['name'])
+        return files_sorted
 
     def delete(self, path: str, names: list):
         """
@@ -157,7 +163,7 @@ class FileManager:
                 else:
                     if search_string.lower() in name.lower():
                         results.append(os.path.relpath(os.path.join(root, name), self.base_path))
-        return {"results": results}
+        return results
 
     def rename(self, path: str, name: str, new_name: str):
         """

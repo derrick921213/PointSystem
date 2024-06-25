@@ -13,6 +13,7 @@ const config: Config = {
   projectName: 'PointSystem',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  
   i18n: {
     defaultLocale: 'zh-TW',
     locales: ['en', 'zh-TW'],
@@ -47,6 +48,11 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     navbar: {
       title: 'PointSystem',
       logo: {
@@ -61,6 +67,7 @@ const config: Config = {
           label: 'Tutorial',
         },
         {to: '/test', label: 'Test', position: 'left'},
+        {to: '/file', label: 'FileManage', position: 'left'},
         {
           type: 'custom-GoogleLoginButton', // 自定義類型
           position: 'right',
@@ -81,9 +88,6 @@ const config: Config = {
       theme: draculaTheme,
       additionalLanguages: ["rust", "toml", "shell-session"],
       defaultLanguage: "rust",
-    },
-    colorMode: {
-      respectPrefersColorScheme: true,
     },
   } satisfies Preset.ThemeConfig,
 };

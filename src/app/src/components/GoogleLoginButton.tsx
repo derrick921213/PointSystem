@@ -46,6 +46,7 @@ const GoogleLoginButton: React.FC = () => {
                 borderRadius: "5px",
                 cursor: "pointer",
                 fontSize: "15px",
+                marginRight: "10px",
               }}
             >
               登出

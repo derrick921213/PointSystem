@@ -62,3 +62,8 @@ html[data-theme="dark"] {
   margin: 0;
   padding: 0;
 }
+a {
+  color: var(--ifm-link-color) ;
+  text-decoration: var(--ifm-link-decoration)!important;
+  transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
+}

@@ -1,0 +1,76 @@
+.FSFileManager {
+  padding: 20px;
+}
+
+.FSSidebar {
+  border-right: 1px solid #ddd;
+  height: 50vh;
+  overflow-y: auto;
+}
+.FSrightSidebar {
+  overflow-y: auto;
+}
+
+.FSFolderItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.FSFileItem {
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.FSIcon {
+  font-size: 1.5rem; /* 调整图标大小 */
+  margin-bottom: 10px;
+}
+
+.FSFileName {
+  margin-left: 8px;
+}
+
+.FSSelected {
+  border: 2px solid #007bff;
+  border-radius: 4px;
+}
+
+.FSTheme-light {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.FSTheme-dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.FSTheme-light .FSSidebar {
+  border-right-color: #ddd;
+}
+
+.FSTheme-dark .FSSidebar {
+  border-right-color: #444;
+}
+
+.FSTheme-light .FSFolderItem,
+.FSTheme-light .FSFileItem {
+  color: #000;
+}
+
+.FSTheme-dark .FSFolderItem,
+.FSTheme-dark .FSFileItem {
+  color: #fff;
+}
+
+.FSTheme-light .btn-danger {
+  background-color: #d9534f;
+  border-color: #d9534f;
+}
+
+.FSTheme-dark .btn-danger {
+  background-color: #c9302c;
+  border-color: #ac2925;
+}

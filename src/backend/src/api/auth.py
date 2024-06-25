@@ -89,4 +89,4 @@ async def logout_with_access(response: Response, user: User = Depends(validate_t
 
 @router.get("/isLogin/")
 async def is_login(user: User = Depends(validate_token)):
-    return {"message": f"{user.id}", "is_logged_in": True}
+    return {"message": f"{user.id}", "is_logged_in": True, "permission": "admin" if user.permission==1 else "user"}
