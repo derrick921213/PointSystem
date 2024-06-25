@@ -1,17 +1,24 @@
 import json
 from os import listdir
 import os
+import shutil
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Path, Request, UploadFile, File
-from core.utils import validate_filename
+from schemas import DirectoryStructure, FileManagerDirectoryContent
+from core.utils import get_full_path, validate_filename, validate_path
 from fastapi.responses import FileResponse, JSONResponse
 from models import User
 from core.security import validate_token
 from os.path import exists
 from sqlalchemy.orm import Session
 from dependencies import get_db
+import asyncio
+from core.file_manager import FileManager
 
 router = APIRouter(prefix="/files", tags=["files"])
-
+# BASE_DIR = "./markdown"
+# if not os.path.exists(BASE_DIR):
+#     os.makedirs(BASE_DIR)
 
 @router.get("/markdown/{filename:path}")
 async def get_markdown(filename: str = Path(...), user: User = Depends(validate_token)):
@@ -120,3 +127,66 @@ def count_files(user: User = Depends(validate_token)):
     file_path = "./markdown/questions"
     files_list = [f for f in os.listdir(file_path) if f.endswith(".mdx")]
     return {"total": len(files_list)}
+
+# async def get_directory_structure(rootdir):
+#     dir_structure = {"name": os.path.basename(rootdir), "children": []}
+#     try:
+#         loop = asyncio.get_event_loop()
+#         for item in await loop.run_in_executor(None, os.listdir, rootdir):
+#             itempath = os.path.join(rootdir, item)
+#             if os.path.isdir(itempath):
+#                 dir_structure["children"].append(await get_directory_structure(itempath))
+#             else:
+#                 dir_structure["children"].append({"name": item})
+#     except PermissionError:
+#         pass  # Ignore directories that cannot be accessed
+#     return dir_structure
+
+# @router.get("/dir", response_model=DirectoryStructure)
+# async def read_directory_structure():
+#     return await get_directory_structure(BASE_DIR)
+
+# Initialize the file manager
+base_path = os.getcwd()
+root_folder = "markdown"
+file_manager = FileManager(base_path, root_folder)
+
+@router.post("/FileOperations")
+async def file_operations(args: FileManagerDirectoryContent):
+    try:
+        full_path = get_full_path(file_manager.base_path, args.Path)
+        validate_path(full_path, file_manager.root_path)
+        
+        if args.Action in ["delete", "rename"]:
+            if not args.TargetPath and not args.Path:
+                return JSONResponse(status_code=401, content={"error": {"code": "401", "message": "Restricted to modify the root folder."}})
+        
+        action_map = {
+            "read": lambda: file_manager.get_files(args.Path, args.ShowHiddenItems),
+            "delete": lambda: file_manager.delete(args.Path, args.Names),
+            "copy": lambda: file_manager.copy(args.Path, args.TargetPath, args.Names, args.RenameFiles),
+            "move": lambda: file_manager.move(args.Path, args.TargetPath, args.Names, args.RenameFiles),
+            "details": lambda: file_manager.details(args.Path, args.Names),
+            "create": lambda: file_manager.create(args.Path, args.Name),
+            "search": lambda: file_manager.search(args.Path, args.SearchString, args.ShowHiddenItems, args.CaseSensitive),
+            "rename": lambda: file_manager.rename(args.Path, args.Name, args.NewName),
+        }
+
+        if args.Action in action_map:
+            return action_map[args.Action]()
+        else:
+            return JSONResponse(status_code=400, content={"error": {"code": "400", "message": "Invalid action"}})
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@router.post("/Upload")
+async def upload_files(path: str, upload_files: List[UploadFile] = File(...)):
+    try:
+        for file in upload_files:
+            file_path = get_full_path(file_manager.base_path, os.path.join(path, file.filename))
+            with open(file_path, "wb") as buffer:
+                shutil.copyfileobj(file.file, buffer)
+        return {"status": "uploaded"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
