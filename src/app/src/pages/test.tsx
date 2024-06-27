@@ -5,6 +5,7 @@ import axios from "axios";
 import * as runtime from "react/jsx-runtime";
 import { evaluate } from "@mdx-js/mdx";
 import SubmitExam from "@site/src/components/SubmitExam";
+import NotFound from "@docusaurus/theme-classic";
 
 // Define a type for the evaluated MDX module
 type MDXModule = {
@@ -75,6 +76,9 @@ function DynamicPage() {
             withCredentials: true,
           }
         );
+        if (response.status !== 200) {
+          window.location.href = "/404.html";
+        }
         const total_quizs = await axios.get(`${backURL}/files/q_count`, {
           headers: {
             "Cache-Control": "no-store",
@@ -108,8 +112,7 @@ function DynamicPage() {
           <MDXProvider>
             <Content />
           </MDXProvider>
-        )}
-        <SubmitExam metadata={metadata} totalQuizs={totalQuizs} />
+        ) && (<SubmitExam metadata={metadata} totalQuizs={totalQuizs} />)}
       </div>
     </Layout>
   );
