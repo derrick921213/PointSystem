@@ -7,7 +7,7 @@
             "answers": [
                 {
                     "name": "answer1",
-                    "value": "git branch feature1"
+                    "value": "git show 123456"
                 }
             ]
         },
@@ -16,7 +16,7 @@
             "answers": [
                 {
                     "name": "answer1",
-                    "value": "git checkout feature1"
+                    "value": "git stash"
                 }
             ]
         }
