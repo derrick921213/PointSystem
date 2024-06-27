@@ -69,15 +69,18 @@ function DynamicPage() {
         const response = await axios.get(
           `${backURL}/files/markdown/${filename}`,
           {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
             withCredentials: true,
           }
         );
-        const total_quizs = await axios.get(
-          `${backURL}/files/q_count`,
-          {
-            withCredentials: true,
-          }
-        );
+        const total_quizs = await axios.get(`${backURL}/files/q_count`, {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+          withCredentials: true,
+        });
 
         const { data } = response;
         const quiz_counter = total_quizs.data.total;

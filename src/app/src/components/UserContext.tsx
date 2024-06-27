@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  ReactNode,
+} from "react";
 import axios from "axios";
 
 interface User {
@@ -28,12 +34,18 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     axios
       .get(isLogin, {
+        headers: {
+          "Cache-Control": "no-cache",
+        },
         withCredentials: true,
       })
       .then((response) => {
         if (response.data.is_logged_in) {
           axios
             .get(users, {
+              headers: {
+                "Cache-Control": "no-cache",
+              },
               withCredentials: true,
             })
             .then((response) => {
@@ -42,7 +54,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
             .catch((error) =>
               console.error("Error fetching user data:", error)
             );
-        } 
+        }
       })
       .catch((error) => console.error("Error checking login status:", error))
       .finally(() => setLoading(false));

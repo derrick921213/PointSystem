@@ -64,7 +64,12 @@ const FileManager: React.FC = () => {
   }, [path]);
   const checkAdminStatus = async () => {
     try {
-      const response = await axios.get(AUTH_API, { withCredentials: true });
+      const response = await axios.get(AUTH_API, {
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+        withCredentials: true,
+      });
       if (response.data.is_logged_in && response.data.permission === "admin") {
         fetchFiles(path);
       } else {
@@ -98,7 +103,12 @@ const FileManager: React.FC = () => {
           Path: path,
           ShowHiddenItems: false,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+          withCredentials: true,
+        }
       );
 
       if (response.data && Array.isArray(response.data)) {
@@ -123,7 +133,12 @@ const FileManager: React.FC = () => {
             Path: path,
             Names: [selectedFile.name],
           },
-          { withCredentials: true }
+          {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+            withCredentials: true,
+          }
         );
         fetchFiles(path);
       } catch (error) {
@@ -143,7 +158,12 @@ const FileManager: React.FC = () => {
           Path: path,
           Name: newFolderName,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+          withCredentials: true,
+        }
       );
       setNewFolderName("");
       fetchFiles(path);
@@ -163,7 +183,12 @@ const FileManager: React.FC = () => {
           ShowHiddenItems: false,
           CaseSensitive: false,
         },
-        { withCredentials: true }
+        {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+          withCredentials: true,
+        }
       );
 
       if (response.data && Array.isArray(response.data)) {
@@ -202,7 +227,9 @@ const FileManager: React.FC = () => {
           {
             headers: {
               "Content-Type": "multipart/form-data",
+              "Cache-Control": "no-cache",
             },
+
             withCredentials: true,
           }
         );
@@ -237,7 +264,12 @@ const FileManager: React.FC = () => {
             Names: [selectedFile.name],
             RenameFiles: false,
           },
-          { withCredentials: true }
+          {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+            withCredentials: true,
+          }
         );
         fetchFiles(path);
       } catch (error) {
@@ -259,7 +291,12 @@ const FileManager: React.FC = () => {
             Names: [selectedFile.name],
             RenameFiles: false,
           },
-          { withCredentials: true }
+          {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+            withCredentials: true,
+          }
         );
         fetchFiles(path);
       } catch (error) {
@@ -280,7 +317,12 @@ const FileManager: React.FC = () => {
             Name: selectedFile.name,
             NewName: newName,
           },
-          { withCredentials: true }
+          {
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+            withCredentials: true,
+          }
         );
         fetchFiles(path);
       } catch (error) {
