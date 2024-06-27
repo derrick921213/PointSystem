@@ -76,6 +76,10 @@ function DynamicPage() {
             withCredentials: true,
           }
         );
+        if (response.status !== 200) {
+          window.location.href = window.location.origin;
+          return;
+        }
         const total_quizs = await axios.get(`${backURL}/files/q_count`, {
           headers: {
             "Cache-Control": "no-store",
@@ -92,7 +96,8 @@ function DynamicPage() {
         setTotalQuizs(quiz_counter);
       } catch (error) {
         console.error("Error fetching MDX content:", error);
-        window.location.href = "/404";
+        window.location.href = window.location.origin;
+        return;
       }
     }
 
