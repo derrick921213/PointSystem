@@ -16,7 +16,7 @@
             "answers": [
                 {
                     "name": "answer1",
-                    "value": "git config --global user.name 'w3schools-test'\ngit config --global user.email 'test@w3schools.com'"
+                    "value": "git config --global user.name 'test'\ngit config --global user.email 'test@example.com'"
                 }
             ]
         }
