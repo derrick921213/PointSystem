@@ -1,0 +1,33 @@
+{
+    "exam_id": 12,
+    "avg_point": 5,
+    "questions":[
+        {
+            "question_id": 1,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git reset --soft HEAD~1"
+                }
+            ]
+        },
+        {
+            "question_id": 2,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git checkout -- file.txt"
+                }
+            ]
+        },
+        {
+            "question_id": 3,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": ".gitignore"
+                }
+            ]
+        }
+    ]
+}
