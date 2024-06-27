@@ -5,6 +5,7 @@ from config import Config
 from database import init_db
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
 app = FastAPI(title='My FastAPI Project')
 app.add_middleware(
     CORSMiddleware,
@@ -15,6 +16,12 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key=Config.secret_key)
 init_db()
+class CacheControlMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["Cache-Control"] = "no-store"  # Set Cache-Control header
+        return response
+app.add_middleware(CacheControlMiddleware)
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
     if exc.status_code == 402:
