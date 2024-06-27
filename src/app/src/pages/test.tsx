@@ -70,14 +70,14 @@ function DynamicPage() {
           `${backURL}/files/markdown/${filename}`,
           {
             headers: {
-              "Cache-Control": "no-cache",
+              "Cache-Control": "no-store",
             },
             withCredentials: true,
           }
         );
         const total_quizs = await axios.get(`${backURL}/files/q_count`, {
           headers: {
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-store",
           },
           withCredentials: true,
         });

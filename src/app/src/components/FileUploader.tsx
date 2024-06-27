@@ -28,7 +28,7 @@ const FileUploader = () => {
       return axios.post(`${UploadURL}/${file.name}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Cache-Control": "no-cache",
+          "Cache-Control": "no-store",
         },
         withCredentials: true,
       });

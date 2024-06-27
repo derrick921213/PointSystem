@@ -35,7 +35,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     axios
       .get(isLogin, {
         headers: {
-          "Cache-Control": "no-cache",
+          "Cache-Control": "no-store",
         },
         withCredentials: true,
       })
@@ -44,7 +44,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           axios
             .get(users, {
               headers: {
-                "Cache-Control": "no-cache",
+                "Cache-Control": "no-store",
               },
               withCredentials: true,
             })

@@ -66,7 +66,7 @@ const FileManager: React.FC = () => {
     try {
       const response = await axios.get(AUTH_API, {
         headers: {
-          "Cache-Control": "no-cache",
+          "Cache-Control": "no-store",
         },
         withCredentials: true,
       });
@@ -105,7 +105,7 @@ const FileManager: React.FC = () => {
         },
         {
           headers: {
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-store",
           },
           withCredentials: true,
         }
@@ -135,7 +135,7 @@ const FileManager: React.FC = () => {
           },
           {
             headers: {
-              "Cache-Control": "no-cache",
+              "Cache-Control": "no-store",
             },
             withCredentials: true,
           }
@@ -160,7 +160,7 @@ const FileManager: React.FC = () => {
         },
         {
           headers: {
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-store",
           },
           withCredentials: true,
         }
@@ -185,7 +185,7 @@ const FileManager: React.FC = () => {
         },
         {
           headers: {
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-store",
           },
           withCredentials: true,
         }
@@ -266,7 +266,7 @@ const FileManager: React.FC = () => {
           },
           {
             headers: {
-              "Cache-Control": "no-cache",
+              "Cache-Control": "no-store",
             },
             withCredentials: true,
           }
@@ -293,7 +293,7 @@ const FileManager: React.FC = () => {
           },
           {
             headers: {
-              "Cache-Control": "no-cache",
+              "Cache-Control": "no-store",
             },
             withCredentials: true,
           }
@@ -319,7 +319,7 @@ const FileManager: React.FC = () => {
           },
           {
             headers: {
-              "Cache-Control": "no-cache",
+              "Cache-Control": "no-store",
             },
             withCredentials: true,
           }
