@@ -1,0 +1,24 @@
+{
+    "exam_id": 4,
+    "avg_point": 5,
+    "questions":[
+        {
+            "question_id": 1,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git log"
+                }
+            ]
+        },
+        {
+            "question_id": 2,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git commit -m 'Add index.html file'"
+                }
+            ]
+        }
+    ]
+}
