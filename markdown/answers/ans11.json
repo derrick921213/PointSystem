@@ -7,7 +7,7 @@
             "answers": [
                 {
                     "name": "answer1",
-                    "value": "git pull"
+                    "value": "git log index.html"
                 }
             ]
         },
@@ -16,7 +16,7 @@
             "answers": [
                 {
                     "name": "answer1",
-                    "value": "git push"
+                    "value": "git diff 1234567 7654321"
                 }
             ]
         }
