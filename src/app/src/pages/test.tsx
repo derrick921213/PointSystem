@@ -96,8 +96,8 @@ function DynamicPage() {
         setTotalQuizs(quiz_counter);
       } catch (error) {
         console.error("Error fetching MDX content:", error);
-        window.location.href = window.location.origin;
-        return;
+        // window.location.href = window.location.origin;
+        // return;
       }
     }
 
