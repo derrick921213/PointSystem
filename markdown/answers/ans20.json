@@ -1,0 +1,24 @@
+{
+    "exam_id": 20,
+    "avg_point": 5,
+    "questions":[
+        {
+            "question_id": 1,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git submodule update --remote"
+                }
+            ]
+        },
+        {
+            "question_id": 2,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git remote add"
+                }
+            ]
+        }
+    ]
+}

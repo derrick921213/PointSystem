@@ -1,0 +1,24 @@
+{
+    "exam_id": 13,
+    "avg_point": 5,
+    "questions":[
+        {
+            "question_id": 1,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git stash apply"
+                }
+            ]
+        },
+        {
+            "question_id": 2,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git stash list"
+                }
+            ]
+        }
+    ]
+}

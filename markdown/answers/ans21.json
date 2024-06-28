@@ -1,0 +1,33 @@
+{
+    "exam_id": 21,
+    "avg_point": 5,
+    "questions":[
+        {
+            "question_id": 1,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git checkout -b feature-1 a1b2c3d4"
+                }
+            ]
+        },
+        {
+            "question_id": 2,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git reflog\ngit checkout a1b2c3d4"
+                }
+            ]
+        },
+        {
+            "question_id": 3,
+            "answers": [
+                {
+                    "name": "answer1",
+                    "value": "git revert a1b2c3d4\ngit push"
+                }
+            ]
+        }
+    ]
+}
