@@ -37,6 +37,7 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: ${DATABASE_PASSWORD}
       MARIADB_DATABASE: ${DATABASE_NAME}
+      MYSQL_PWD: ${DATABASE_PASSWORD}
     volumes:
       - db-data:/var/lib/mysql
     ports:
@@ -45,7 +46,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "mariadb-admin ping -h localhost -p${MARIADB_ROOT_PASSWORD}",
+          "mariadb-admin ping -h localhost",
         ]
       interval: 10s
       timeout: 5s
