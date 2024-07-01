@@ -115,6 +115,9 @@ const SubmitExam: React.FC<SubmitExamProps> = ({ metadata, totalQuizs }) => {
             }
           }
         });
+        document.querySelectorAll("textarea").forEach((textarea) => {
+          textarea.value = "";
+        });
         console.log("Response:", result);
       } else {
         const errorText = await response.text();
